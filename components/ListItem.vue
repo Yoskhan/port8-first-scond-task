@@ -1,14 +1,23 @@
 <template>
   <div>
     <div class="container">
-      <div class="column-box state-box" :class="order.one">
+      <div class="column-box title-box" :class="order.one">
         <p class="column-title">Title:</p>
         <div class="item-box title">{{ loadedBuilding.title || "-" }}</div>
       </div>
 
       <div class="column-box state-box" :class="order.state">
         <p class="column-title">State:</p>
-        <div class="item-box state">{{ loadedBuilding.state || false }}</div>
+        <div
+          class="item-box state"
+          :style="[
+            loadedBuilding.state
+              ? { backgroundColor: 'lightgreen' }
+              : { backgroundColor: 'coral' },
+          ]"
+        >
+          {{ loadedBuilding.state || false }}
+        </div>
       </div>
 
       <div class="column-box area-box" :class="order.area">
@@ -23,7 +32,7 @@
 
       <div class="column-box lift-box" :class="order.lift">
         <p class="column-title">Lift:</p>
-        <div class="item-box lift">{{ loadedBuilding.lift || 'no' }}</div>
+        <div class="item-box lift">{{ loadedBuilding.lift || "no" }}</div>
       </div>
 
       <div class="column-box adress-box" :class="order.adress">
@@ -33,42 +42,55 @@
 
       <div class="column-box rentalgross-box" :class="order.rentalgross">
         <p class="column-title">Rentalgross:</p>
-        <div class="item-box rentalgross">{{ loadedBuilding.rentalgross || "-" }}</div>
+        <div class="item-box rentalgross">
+          {{ loadedBuilding.rentalgross || "-" }}
+        </div>
       </div>
 
-      <hr />
+      <div class="column-box seven">
+        <button @click="showEditPopup = !showEditPopup" class="edit-button">
+          Edit
+        </button>
+        <button @click="deleteBuilding(building)" class="delete-button">
+          Delete
+        </button>
+      </div>
+    
     </div>
-    <button @click="showEditPopup = !showEditPopup" class="edit-button">Edit</button>
-    <button @click="deleteBuilding(building)" class="delete-button">Delete</button>
 
-    <edit-building :building="building" v-if="showEditPopup" @close-popup="showEditPopup = false"/>
+    <edit-building
+      :building="building"
+      v-if="showEditPopup"
+      @close-popup="showEditPopup = false"
+    />
+    <hr>
   </div>
 </template>
 
 <script>
-import EditBuilding from '~/components/EditBuilding'
+import EditBuilding from "~/components/EditBuilding";
 
 export default {
   data() {
     return {
       loadedBuilding: this.building,
-      showEditPopup: false
+      showEditPopup: false,
     };
   },
   components: {
-      EditBuilding
+    EditBuilding,
   },
   props: ["building"],
   computed: {
-      order(){
-          return this.$store.getters.order
-      },
+    order() {
+      return this.$store.getters.order;
+    },
   },
   methods: {
-          deleteBuilding(building){
-              this.$store.dispatch('deleteBuilding', building);
-          }
-      }
+    deleteBuilding(building) {
+      this.$store.dispatch("deleteBuilding", building);
+    },
+  },
 };
 </script>
 
@@ -98,21 +120,26 @@ export default {
 .container {
   display: flex;
   align-items: center;
-  flex-flow: row wrap;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: start;
 }
 
 .column-box {
-  display: inline-block;
+  
 }
 
 .item-box {
   display: inline-block;
-  height: 3rem;
-  border: 1px solid black;
+  background-color: lightblue;
   margin: 1rem 0;
   padding: 0.5rem 1rem;
   width: 11rem;
   text-align: center;
+}
+
+.state {
+  
 }
 
 .rentalgross,
@@ -121,7 +148,7 @@ export default {
 .area,
 .state {
   width: 4rem;
-  text-align: center;
+  
 }
 
 .rentalgross,
@@ -130,20 +157,20 @@ export default {
 }
 
 .title {
-  width: 18rem;
-  white-space: nowrap;
+  width: 13rem;
 }
 
 .column-title {
   display: inline-block;
-  height: 3rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
   text-align: center;
+  font-weight: bold;
 }
 
 .edit-button,
 .delete-button {
-    margin: 0 0 0 1rem;
-    padding: 0.5rem 1rem;
+  margin: 0 0 1rem 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
 }
 </style>

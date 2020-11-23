@@ -107,6 +107,7 @@ export default {
 .settings-button,
 .addNew-button {
   padding: 0.5rem;
+  border: none;
 }
 
 .settings-container {
