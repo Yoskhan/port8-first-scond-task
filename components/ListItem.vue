@@ -16,7 +16,7 @@
               : { backgroundColor: 'coral' },
           ]"
         >
-          {{ loadedBuilding.state || false }}
+          {{ loadedBuilding.state | stateFilter }}
         </div>
       </div>
 
@@ -32,7 +32,16 @@
 
       <div class="column-box lift-box" :class="order.lift">
         <p class="column-title">Lift:</p>
-        <div class="item-box lift">{{ loadedBuilding.lift || "no" }}</div>
+        <div
+          class="item-box lift"
+          :style="[
+            loadedBuilding.lift
+              ? { backgroundColor: 'lightgreen' }
+              : { backgroundColor: 'coral' },
+          ]"
+        >
+          {{ loadedBuilding.lift | liftFilter }}
+        </div>
       </div>
 
       <div class="column-box adress-box" :class="order.adress">
@@ -48,14 +57,13 @@
       </div>
 
       <div class="column-box seven">
-        <button @click="showEditPopup = !showEditPopup" class="edit-button">
-          Edit
-        </button>
-        <button @click="deleteBuilding(building)" class="delete-button">
+        <button @click="deleteBuilding(building)" class="button">
           Delete
         </button>
+        <button @click="showEditPopup = !showEditPopup" class="button">
+          Edit
+        </button>
       </div>
-    
     </div>
 
     <edit-building
@@ -63,7 +71,7 @@
       v-if="showEditPopup"
       @close-popup="showEditPopup = false"
     />
-    <hr>
+    <hr />
   </div>
 </template>
 
@@ -89,6 +97,14 @@ export default {
   methods: {
     deleteBuilding(building) {
       this.$store.dispatch("deleteBuilding", building);
+    },
+  },
+  filters: {
+    liftFilter(value) {
+      return value ? "Yes" : "No";
+    },
+    stateFilter(value) {
+      return value ? "Active" : "Inactive";
     },
   },
 };
@@ -121,25 +137,44 @@ export default {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  width: 100%;
-  justify-content: start;
+  width: 95%;
+  justify-content: space-between;
+  margin-left: 1rem;
 }
 
-.column-box {
-  
+@media only screen and (max-width: 450px) {
+  .container {
+    display: flex;
+    flex-flow: column;
+    padding: 2rem 0;
+    margin: 0;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .column-box {
+    display: flex;
+    width: 85%;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .item-box {
   display: inline-block;
   background-color: lightblue;
+  border-radius: 0.2rem;
   margin: 1rem 0;
   padding: 0.5rem 1rem;
   width: 11rem;
   text-align: center;
 }
 
-.state {
-  
+@media only screen and (max-width: 450px) {
+  .item-box {
+    font-weight: bold;
+    margin: 0.4rem 0;
+  }
 }
 
 .rentalgross,
@@ -148,7 +183,6 @@ export default {
 .area,
 .state {
   width: 4rem;
-  
 }
 
 .rentalgross,
@@ -165,12 +199,5 @@ export default {
   padding: 0.5rem 0.5rem;
   text-align: center;
   font-weight: bold;
-}
-
-.edit-button,
-.delete-button {
-  margin: 0 0 1rem 1rem;
-  padding: 0.5rem 1rem;
-  border: none;
 }
 </style>

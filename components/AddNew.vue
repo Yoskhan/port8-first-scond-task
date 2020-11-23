@@ -2,6 +2,7 @@
   <div class="popup-container">
     <div class="popup-container-content">
       <form @submit.prevent="addnew()" class="form-list">
+        <h1 class="add-new-title">Add new building:</h1>
         <label for="title">Title:</label><br />
         <input
           type="text"
@@ -55,8 +56,12 @@
           v-model="addNewObject.rentalgross"
         /><br /><br />
         <div class="break"></div>
-        <input type="submit" value="Add New" />
-        <button @click="$emit('close-popup')">Cancel</button>
+        <div>
+          <button @click="$emit('close-popup')" class="button cancel-button">
+            Cancel
+          </button>
+          <button class="button add-button">Add New</button>
+        </div>
       </form>
     </div>
   </div>
@@ -79,43 +84,87 @@ export default {
   },
   methods: {
     addnew() {
-      this.$store.dispatch('addNew', this.addNewObject)
-      this.$emit('close-popup')
+      this.$store.dispatch("addNew", this.addNewObject);
+      this.$emit("close-popup");
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .popup-container {
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%;
+  width: 100%;
+  height: auto;
 }
 
 .popup-container-content {
   background-color: #fefefe;
-  margin: 10% auto; /* 15% from the top and centered */
-  padding: 20px;
+  margin: 10% auto;
+  padding: 2rem;
   border: 1px solid #888;
-  width: 60%; /* Could be more or less, depending on screen size */
-  height: 20rem;
+  width: 60%;
+}
+
+@media only screen and (max-width: 450px) {
+  .popup-container-content {
+    width: 90%;
+    display: flex;
+    padding: 20px;
+  }
 }
 
 .form-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  margin-top: 1rem;
 }
 
-input{
-    margin: 1rem 1rem 1rem 0.2rem}
+@media only screen and (max-width: 450px) {
+  .form-list {
+    display: flex;
+    flex-flow: column;
+    margin-top: 0;
+  }
+}
+
+input {
+  margin: 1rem 1rem 1rem 0.2rem;
+  border: none;
+  background-color: whitesmoke;
+}
+
+@media only screen and (max-width: 450px) {
+  label {
+    margin: 0;
+  }
+
+  input {
+    margin: -1rem;
+    height: 1.5rem;
+  }
+}
 
 .break {
-    flex-basis: 100%
+  flex-basis: 100%;
+}
+
+.add-new-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.add-button,
+.cancel-button {
+  margin: 1rem 0.5rem;
+}
+
+@media only screen and (max-width: 450px) {
+  .add-button,
+  .cancel-button {
+    margin: 0.2rem 0;
+  }
 }
 </style>

@@ -1,12 +1,13 @@
 <template>
   <div>
-    <h1>Second Task</h1>
-    <p>Insert text here.</p>
-    <input type="text" @keyup="parseText" v-model="textInput" />
-    <p>The most frequent character in the string is:</p>
-    <h2>{{ maxKey }}</h2>
-    <p>Number of</p>
-    <h2>{{ this.keyFrequency }}</h2>
+    <div class="container">
+      <h1 class="task-title">Coding challenge</h1>
+      <input type="text" @keyup="parseText" v-model="textInput" placeholder="Enter text here..." />
+      <p>The most frequent character in the string is:</p>
+      <h2>{{ maxKey }}</h2>
+      <p>Number of repetitions:</p>
+      <h2>{{ this.keyFrequency }}</h2>
+    </div>
   </div>
 </template>
 
@@ -14,7 +15,7 @@
 export default {
   data() {
     return {
-      textInput: "Enter text here.",
+      textInput: "",
       number: "0",
       maxKey: "",
       keyFrequency: 0,
@@ -47,5 +48,20 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.task-title {
+  text-align: center;
+  margin: 2rem 0
+}
+
+.container {
+  margin: 0 auto;
+  text-align: center;
+}
+
+input {
+  height: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
 </style>

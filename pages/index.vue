@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h1>First Task</h1>
-    <button @click="showSettings = !showSettings" class="settings-button">Settings</button>
-    <button @click="showAddNew = !showAddNew" class="addNew-button">Add New</button>
+    <h1 class="task-title">List of buildings</h1>
+    <button @click="showSettings = !showSettings" class="button">Settings</button>
+    <button @click="showAddNew = !showAddNew" class="button">Add New</button>
     <AddNew v-if="showAddNew" @close-popup="showAddNew = false"/>
     <div class="settings-container" v-if="showSettings">
 
       <div :class="order.state">
-        <h3>State</h3>
+        <h3 class="setting-title">State</h3>
         <select @change="onChange($event, 'state')" v-model="order.state">
           <option v-for="position in order" :key="position" :value="position">
             {{ position }}
@@ -16,7 +16,7 @@
       </div>
 
       <div :class="order.area">
-        <h3>Area</h3>
+        <h3 class="setting-title">Area</h3>
         <select @change="onChange($event, 'area')" v-model="order.area">
           <option v-for="position in order" :key="position" :value="position">
             {{ position }}
@@ -25,7 +25,7 @@
       </div>
 
       <div :class="order.rooms">
-        <h3>Rooms</h3>
+        <h3 class="setting-title">Rooms</h3>
         <select @change="onChange($event, 'rooms')" v-model="order.rooms">
           <option v-for="position in order" :key="position" :value="position">
             {{ position }}
@@ -34,7 +34,7 @@
       </div>
 
       <div :class="order.lift">
-        <h3>Lift</h3>
+        <h3 class="setting-title">Lift</h3>
         <select @change="onChange($event, 'lift')" v-model="order.lift">
           <option v-for="position in order" :key="position" :value="position">
             {{ position }}
@@ -43,7 +43,7 @@
       </div>
 
       <div :class="order.adress">
-        <h3>Adress</h3>
+        <h3 class="setting-title">Adress</h3>
         <select @change="onChange($event, 'adress')" v-model="order.adress">
           <option v-for="position in order" :key="position" :value="position">
             {{ position }}
@@ -52,7 +52,7 @@
       </div>
 
       <div :class="order.rentalgross">
-        <h3>Rentalgross</h3>
+        <h3 class="setting-title">Rentalgross</h3>
         <select
           @change="onChange($event, 'rentalgross')"
           v-model="order.rentalgross"
@@ -104,14 +104,25 @@ export default {
 </script>
 
 <style scoped>
-.settings-button,
-.addNew-button {
-  padding: 0.5rem;
-  border: none;
+.task-title {
+  text-align: center;
+  margin: 2rem 0
 }
 
 .settings-container {
   display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+  background-color: lightpink;
+  margin-top: 1rem;
+}
+
+.setting-title{
+  color: darkslateblue;
+}
+
+select {
+  border: 1px solid lightgrey;
 }
 
 .lift,

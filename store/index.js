@@ -31,7 +31,6 @@ const createStore = () => {
             },
             changeOrder(state, payload) {
                 for (const key in state.order) {
-                    console.log(`${key}: ${state.order[key]}`);
                     if (state.order[key] == payload.event.target.value && key !== payload.position) {
                         state.order[key] = state.orderCopy[payload.position]
                         state.orderCopy[key] = state.order[key]
@@ -40,9 +39,9 @@ const createStore = () => {
                 state.orderCopy[payload.position] = state.order[payload.position]
 
 
-                // state.order.forEach(row=> {
-                //     row == payload.event.target.value ? row = state.order[payload.position] : null
-                // })
+                // OoderCopy is made because I couldn't get previous value from "select" html element,
+                // after column order is changed.
+                
             },
             editBuilding(state, editBuilding) {
 
@@ -88,9 +87,9 @@ const createStore = () => {
                                     adress: item.building.adress,
                                     state: item.building.state,
                                     area: parseInt(item.area) || 0,
-                                    rooms: item.rooms || "-",
+                                    rooms: item.rooms || 0,
                                     lift: item.lift,
-                                    rentalgross: item.rentalgross || "-"
+                                    rentalgross: item.rentalgross || 0
                                 }
 
                                 buildingsArray.push(tempBuildingObject);
